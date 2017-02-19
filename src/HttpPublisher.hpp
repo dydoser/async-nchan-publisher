@@ -8,14 +8,13 @@
 #include "PublisherConnection.hpp"
 
 using namespace std;
-using namespace boost::asio;
 
 class HttpPublisher {
-    io_service &io;
+    boost::asio::io_service &io;
 public:
     map<string, PublisherConnection*> connections;
 
-    HttpPublisher(io_service &service) : io(service) {
+    HttpPublisher(boost::asio::io_service &service) : io(service) {
 
     };
 

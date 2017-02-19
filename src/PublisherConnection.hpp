@@ -5,16 +5,14 @@
 #include "boost/asio.hpp"
 #include "boost/bind.hpp"
 #include "boost/lexical_cast.hpp"
-#include "Concatenate.hpp"
+#include "../../../helpers/Concatenate.hpp"
 
 using namespace std;
-using namespace boost;
-using namespace boost::asio;
 using namespace boost::asio::ip;
 
 class PublisherConnection {
     tcp::resolver mResolver;
-    io_service &io;
+    boost::asio::io_service &io;
     string* mSendBuffer;
     char buf[65536];
     boost::asio::ip::tcp::socket mSocket;
@@ -87,7 +85,7 @@ class PublisherConnection {
         sendScheduled = true;
         string* str = mSendBuffer;
         mSendBuffer = new string();
-        boost::asio::async_write(mSocket, buffer(str->c_str(), str->length()),
+        boost::asio::async_write(mSocket, boost::asio::buffer(str->c_str(), str->length()),
             [str, this](boost::system::error_code err, std::size_t size){
                 delete str;
                 if(err)
@@ -110,7 +108,7 @@ class PublisherConnection {
         );
     }
 public:
-    PublisherConnection (io_service &service, string& host, int port) :
+    PublisherConnection (boost::asio::io_service &service, string& host, int port) :
             io(service), mSocket(service), host(host), port(port), mResolver(service) {
         mStartCommunication();
     };

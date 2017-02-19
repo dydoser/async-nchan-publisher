@@ -44,6 +44,5 @@ int main() {
         }
     }).detach();
     io.run();
-
     return 0;
 }
