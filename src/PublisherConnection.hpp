@@ -5,15 +5,15 @@
 #include "boost/asio.hpp"
 #include "boost/bind.hpp"
 #include "boost/lexical_cast.hpp"
-#include "../../../helpers/Concatenate.hpp"
 
+using boost::lexical_cast;
 using namespace std;
 using namespace boost::asio::ip;
 
 class PublisherConnection {
     tcp::resolver mResolver;
     boost::asio::io_service &io;
-    string* mSendBuffer;
+    string* mSendBuffer = nullptr;
     char buf[65536];
     boost::asio::ip::tcp::socket mSocket;
     bool sendScheduled = false;
